@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.light_dark_theme_flutter">
    <application
-        android:label="light_dark_theme_flutter"
+        android:label="Flutter Theme"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
