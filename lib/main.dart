@@ -1,20 +1,32 @@
 import 'package:flutter/material.dart';
-
+import 'package:light_dark_theme_flutter/models/ThemeNotifier.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/Home.dart';
 
-void main() {
-  runApp(MainWidget());
+void main() async {
+  WidgetsFlutterBinding
+      .ensureInitialized(); //required to use platform channels to call native code.
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool themeBool = prefs.getBool("isDark") ?? false; //null check
+  runApp(
+    ChangeNotifierProvider(
+      create: (BuildContext context) => ThemeProvider(isDark: themeBool),
+      child: MainWidget(),
+    ),
+  );
 }
 
 class MainWidget extends StatelessWidget {
-  const MainWidget({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Theme',
-      home: HomeScreen(),
-      routes: {},
-    );
+    return Consumer<ThemeProvider>(builder: (context, themeProvider, child) {
+      return MaterialApp(
+        title: 'Flutter Theme',
+        home: HomeScreen(),
+        theme: themeProvider.getTheme,
+        routes: {},
+      );
+    });
   }
 }
