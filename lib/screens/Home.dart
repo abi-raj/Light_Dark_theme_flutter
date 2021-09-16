@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:light_dark_theme_flutter/models/ThemeNotifier.dart';
+import 'package:light_dark_theme_flutter/themes/Themes.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,20 +13,29 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    ThemeProvider themeProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
+
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Hello World!"),
-            IconButton(
-              onPressed: () {
-                ThemeProvider themeProvider =
-                    Provider.of<ThemeProvider>(context, listen: false);
-                themeProvider.changeTheme();
-              },
-              icon: Icon(Icons.brightness_4_outlined),
+            Container(
+              child: Image.asset(themeProvider.getTheme == darkTheme
+                  ? 'assets/moon.png'
+                  : 'assets/sun.png'),
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: MediaQuery.of(context).size.height * 0.2,
             ),
+            Switch(
+                value: themeProvider.getTheme == darkTheme,
+                activeColor: themeProvider.getTheme == darkTheme
+                    ? Colors.white
+                    : Colors.black,
+                onChanged: (d) {
+                  themeProvider.changeTheme();
+                })
           ],
         ),
       ),

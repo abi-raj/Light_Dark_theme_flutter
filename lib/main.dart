@@ -20,12 +20,13 @@ void main() async {
 class MainWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Wrapping MaterialApp with Consumer makes the ThemeProvider available throughout the app.
     return Consumer<ThemeProvider>(builder: (context, themeProvider, child) {
       return MaterialApp(
         title: 'Flutter Theme',
         home: HomeScreen(),
         theme: themeProvider.getTheme,
-        routes: {},
+        debugShowCheckedModeBanner: false,
       );
     });
   }
